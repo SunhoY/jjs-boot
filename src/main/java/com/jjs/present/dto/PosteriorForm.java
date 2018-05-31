@@ -76,4 +76,18 @@ public class PosteriorForm {
     public void setMaximumDefectItem(int maximumDefectItem) {
         this.maximumDefectItem = maximumDefectItem;
     }
+
+    @Override
+    public String toString() {
+        return "PosteriorForm{" +
+                "population=" + population +
+                ", reliability=" + reliability +
+                ", confidenceLevel=" + confidenceLevel +
+                ", defectiveItem=" + defectiveItem +
+                ", hyperParameterA=" + hyperParameterA +
+                ", hyperParameterB=" + hyperParameterB +
+                ", maximumDefectItem=" + maximumDefectItem +
+                ", posteriorType=" + posteriorType +
+                '}';
+    }
 }
