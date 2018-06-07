@@ -19,7 +19,11 @@ public class PosteriorController {
 
     @RequestMapping("/posterior")
     public int calculatePosterior(@RequestBody PosteriorForm form) {
-        logger.info(form.toString());
-        return posteriorService.findN(form);
+        int solution = posteriorService.findN(form);
+
+        logger.info("REQUEST: {}", form.toString());
+        logger.info("RESPONSE: {}", solution);
+
+        return solution;
     }
 }

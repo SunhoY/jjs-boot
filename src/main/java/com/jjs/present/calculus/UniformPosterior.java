@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+import static com.jjs.present.Constant.SCALE;
+
 @Component("uniformPosterior")
 public class UniformPosterior implements Posterior {
     private final JJSMath jjsMath;
@@ -19,6 +21,6 @@ public class UniformPosterior implements Posterior {
         BigDecimal first = jjsMath.combination(xthDefect, defectItem);
         BigDecimal second = jjsMath.combination(population - xthDefect, nthTest - defectItem);
         BigDecimal bottom = jjsMath.combination(population + 1, nthTest + 1);
-        return first.multiply(second).divide(bottom, 40, BigDecimal.ROUND_CEILING);
+        return first.multiply(second).divide(bottom, SCALE, BigDecimal.ROUND_CEILING);
     }
 }

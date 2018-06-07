@@ -1,15 +1,18 @@
 package com.jjs.present.calculus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+import static com.jjs.present.Constant.SCALE;
+
 @Component
 public class JJSMath {
-    private static int SCALE = 15;
-
     private final FactorialData factorialData;
+    private static final Logger logger = LoggerFactory.getLogger(JJSMath.class);
 
     @Autowired
     public JJSMath(FactorialData factorialData) {
@@ -42,8 +45,7 @@ public class JJSMath {
     }
 
     public BigDecimal combination(int n, int k) {
-        return factorial(n).divide(
-                factorial(k).multiply(factorial(n - k)), SCALE, BigDecimal.ROUND_FLOOR);
+        return factorial(n).divide(factorial(k).multiply(factorial(n - k)), SCALE, BigDecimal.ROUND_FLOOR);
     }
 
     public BigDecimal betaBinomial(int first, int second) {
