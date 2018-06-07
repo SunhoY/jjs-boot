@@ -1,25 +1,52 @@
 package com.jjs.present.calculus;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 
+@Component
 public class JJSMath {
     private static int SCALE = 15;
 
-    public static BigDecimal factorial(int n) {
-        BigDecimal fac = BigDecimal.ONE;
+    private final FactorialData factorialData;
 
-        for (int i = 1; i <= n; i++) {
-            fac = fac.multiply(BigDecimal.valueOf(i));
-        }
-        return fac;
+    @Autowired
+    public JJSMath(FactorialData factorialData) {
+        this.factorialData = factorialData;
     }
 
-    public static BigDecimal combination(int n, int k) {
+    public BigDecimal factorial(int n) {
+        return factorialRecursive(n);
+    }
+
+    private BigDecimal factorialRecursive(int n) {
+        if (n <= 1) {
+            factorialData.putFactorialData(n, BigDecimal.ONE);
+
+            return BigDecimal.ONE;
+        }
+
+        BigDecimal answer = this.factorialData.getFactorialData(n);
+
+        if (answer.equals(BigDecimal.ZERO)) {
+            BigDecimal startValue = new BigDecimal(n);
+            BigDecimal newAnswer = startValue.multiply(factorialRecursive(n - 1));
+
+            factorialData.putFactorialData(n, newAnswer);
+
+            return newAnswer;
+        } else {
+            return answer;
+        }
+    }
+
+    public BigDecimal combination(int n, int k) {
         return factorial(n).divide(
                 factorial(k).multiply(factorial(n - k)), SCALE, BigDecimal.ROUND_FLOOR);
     }
 
-    public static BigDecimal betaBinomial(int first, int second) {
+    public BigDecimal betaBinomial(int first, int second) {
         return factorial(first - 1).multiply(factorial(second - 1)).divide(factorial(first + second - 1), SCALE, BigDecimal.ROUND_CEILING);
     }
 }
